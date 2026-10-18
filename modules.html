@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Modules — Open4D</title>
   <meta name="description" content="Research modules in the Open4D platform: N4MC, TSMC, TVMC, Unity decoder plugin, ARAP volume tracking, and temporal mesh editing." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#f3f3ee" />
+  <link rel="canonical" href="https://open4dfoundation.github.io/modules.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="nav">
     <div class="nav-inner">
@@ -29,10 +29,10 @@
         </svg>
         <span>Open<span class="logo-4d">4D</span></span>
       </a>
-      <nav>
+      <nav aria-label="Primary navigation">
         <ul class="nav-links" id="nav-links">
           <li><a href="index.html">Home</a></li>
-          <li><a href="modules.html" class="active">Modules</a></li>
+          <li><a href="modules.html" class="active" aria-current="page">Modules</a></li>
           <li><a href="documentation.html">Documentation</a></li>
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="benchmarks.html">Benchmarks</a></li>
@@ -43,15 +43,17 @@
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </header>
+
+  <main id="main-content">
 
   <section class="page-hero">
     <div class="hero-bg"></div>
     <div class="container">
-      <span class="section-eyebrow">Research Modules</span>
       <h1>Modules</h1>
+        <span class="section-context">Research Modules</span>
       <p>
         Open4D research modules are independent systems and algorithms built on the stable core API.
         Each module ships with source code, configuration, and evaluation scripts — and evolves on its
@@ -60,6 +62,8 @@
     </div>
   </section>
 
+
+  <section class="section section-alt" id="development-codecs"><div class="container"><div class="section-head left"><h2>New codec paths in the source preview</h2><p>The original module descriptions below remain available. The development branch adds a common codec interface, explicit attribute support, and a runtime manager. Adapters and the research runtimes are installed separately.</p></div><div class="table-wrap" tabindex="0" aria-label="Scrollable development codec support"><table><caption>Development validation, October 2026; not a package release</caption><thead><tr><th>Path</th><th>Verified behavior</th><th>Setup boundary</th></tr></thead><tbody><tr><th scope="row">Draco</th><td>Fresh-process mesh and point decoding; named native attributes</td><td>Pinned native builds on macOS and Linux; DracoPy for the Python profile</td></tr><tr><th scope="row">V-DMC / Faster V-DMC</th><td>Clean Linux source builds, geometry round trips, and native UV/texture coding</td><td>Linux build recipes; one-material texture profile is opt-in</td></tr><tr><th scope="row">N4MC / QNDF</th><td>Longer training runs, intermediate checkpoints, and cold decoding</td><td>Research Python environment and model training; geometry attributes have explicit limits</td></tr><tr><th scope="row">ReRF</th><td>Three-frame genuine learned model compressed and cold-decoded with training inputs unavailable</td><td>CUDA extension build; this short training run still has limited held-out reconstruction quality</td></tr><tr><th scope="row">Other research adapters</th><td>Registered through the codec interface</td><td>Attach their existing research environments; registration alone does not install or validate a runtime</td></tr></tbody></table></div><div class="hero-actions"><a class="btn btn-primary" href="documentation.html#native-backends">Set up a runtime</a><a class="btn btn-secondary" href="benchmarks.html#measured-results">Inspect measured results</a></div></div></section>
   <section class="section">
     <div class="container">
 
@@ -75,7 +79,7 @@
           per-frame static compression while preserving geometric fidelity across time.
         </p>
         <p>
-          Integrated into Open4D as a core compression submodule under <code style="font-family: var(--mono); font-size: 0.85em; color: #a5b4fc;">open4d/core/N4MC</code>.
+          Integrated into Open4D as a core compression submodule under <code style="font-family: var(--mono); font-size: 0.85em; color: var(--accent);">open4d/core/N4MC</code>.
         </p>
         <div class="module-meta">
           <span>📦 open4d/core/N4MC</span>
@@ -178,7 +182,7 @@
         </div>
         <p>
           The core package ships with playback utilities for meshes, point clouds, and Draco-compressed
-          point clouds, plus conversion tools that create <code style="font-family: var(--mono); font-size: 0.85em; color: #a5b4fc;">.o4d</code>
+          point clouds, plus conversion tools that create <code style="font-family: var(--mono); font-size: 0.85em; color: var(--accent);">.o4d</code>
           sequences from raw frame data.
         </p>
         <div class="code-block">
@@ -210,6 +214,8 @@ python examples/play_draco_pointcloud_o4d.py</code></pre>
       <a href="documentation.html" class="btn btn-secondary">Read the docs</a>
     </div>
   </section>
+
+  </main>
 
   <footer class="footer">
     <div class="container">

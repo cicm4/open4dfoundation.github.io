@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Documentation — Open4D</title>
   <meta name="description" content="Open4D documentation: installation, quickstart, repository structure, core API, IO, metrics, and examples." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#f3f3ee" />
+  <link rel="canonical" href="https://open4dfoundation.github.io/documentation.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="nav">
     <div class="nav-inner">
@@ -29,11 +29,11 @@
         </svg>
         <span>Open<span class="logo-4d">4D</span></span>
       </a>
-      <nav>
+      <nav aria-label="Primary navigation">
         <ul class="nav-links" id="nav-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="modules.html">Modules</a></li>
-          <li><a href="documentation.html" class="active">Documentation</a></li>
+          <li><a href="documentation.html" class="active" aria-current="page">Documentation</a></li>
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="benchmarks.html">Benchmarks</a></li>
           <li><a href="about.html">About</a></li>
@@ -43,9 +43,11 @@
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </header>
+
+  <main id="main-content">
 
   <div class="container docs-layout">
 
@@ -56,6 +58,10 @@
         <li><a href="#introduction">Introduction</a></li>
         <li><a href="#installation">Installation</a></li>
         <li><a href="#quickstart">Quickstart</a></li>
+        <li><a href="#sequence-api">Sequence API</a></li>
+        <li><a href="#development-workflows">Development workflows</a></li>
+        <li><a href="#native-backends">Native runtimes</a></li>
+        <li><a href="#data-catalog">Data and models</a></li>
       </ul>
       <h5>Concepts</h5>
       <ul>
@@ -78,7 +84,7 @@
     </aside>
 
     <!-- Content -->
-    <main class="docs-content">
+    <div class="docs-content">
       <h1>Documentation</h1>
       <p class="lead">
         Everything you need to install Open4D, understand its data model, and start working with
@@ -112,7 +118,7 @@
       <h2 id="installation">Installation</h2>
       <h3>Requirements</h3>
       <ul>
-        <li>Python 3.9 or later</li>
+        <li>Python 3.10 through 3.13 for the current package</li>
         <li>Git (with submodule support, for the N4MC and TSMC compression modules)</li>
         <li>Unity 2022 LTS or later (only for the XR decoder plugin)</li>
       </ul>
@@ -134,6 +140,7 @@ git submodule update --init --recursive</code></pre>
       </div>
 
       <h2 id="quickstart">Quickstart</h2>
+      <p>The scripts in this original quickstart describe the legacy players. <a href="#sequence-api">Use the current sequence API below</a> for new programs.</p>
       <p>The <code>examples/</code> directory contains minimal, runnable scripts for the most common tasks:</p>
       <div class="code-block">
         <div class="code-head"><span>shell</span><button class="copy-btn">Copy</button></div>
@@ -155,6 +162,62 @@ python open4d/tools/create_o4d_mesh.py
 <span class="cm"># 2. play it back</span>
 python examples/play_mesh_o4d.py</code></pre>
       </div>
+
+
+      <h2 id="sequence-api">One Python sequence, from open to playback</h2>
+      <p>Keep the existing research examples below as a reference. For the current mesh-sequence API, start with a source checkout and the player extra:</p>
+      <div class="code-block"><div class="code-head"><span>macOS or Linux source setup</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>git clone https://github.com/open4dfoundation/Open4D.git
+cd Open4D
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e &quot;.[player]&quot;</code></pre></div>
+      <p>Generate a wave locally with no captured data. The homepage recording was rendered from this MIT-licensed generator:</p>
+      <div class="code-block"><div class="code-head"><span>Generated mesh sequence</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>from open4d.demo import mesh_sequence
+from open4d.visualization import visualize
+
+with mesh_sequence(side=24, frames=30, fps=15) as sequence:
+    visualize(sequence, up=&quot;z&quot;)</code></pre></div>
+      <p>For your own OBJ or PLY folder, use <code>open_sequence("my_frames/", fps=30)</code> from <code>open4d.io</code>. Numeric filenames determine ordering; a manifest preserves timestamps and metadata. <a href="assets/open4d-mesh-sequence.zip" download>Download the existing ten-frame OBJ/PLY website sample</a> and keep its included MIT license.</p>
+      <h2 id="development-workflows">Development workflows</h2>
+      <div class="site-notice">These additions use the <a href="https://github.com/open4dfoundation/Open4D/pull/63">development preview in PR #63</a>, on branch <code>pr/october-proposal-plugins</code>. They are not a published package. Select that branch in your source checkout before running these commands.</div>
+      <div class="workflow-row" id="gaussian-playback">
+        <div><h3>Render Gaussian splats</h3><p>The Qt OpenGL viewer draws projected anisotropic Gaussian splats with opacity, depth ordering, and spherical harmonics through degree three. Playback, synchronized comparison, and the live viewer share the renderer.</p><p>A fallback to points is labelled. Neural appearance models keep their own rendering requirements. This generated example tests the viewer without training a model.</p></div>
+        <div><div class="code-block"><div class="code-head"><span>Synthetic Gaussian example</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>from open4d.data import SyntheticGaussianSequence
+from open4d.visualization import visualize
+
+with SyntheticGaussianSequence().load() as sequence:
+    visualize(sequence)</code></pre></div><a class="source-link" href="https://github.com/open4dfoundation/Open4D/tree/pr/october-proposal-plugins/open4d/visualization" target="_blank" rel="noopener">Inspect the viewer source</a></div>
+      </div>
+      <div class="workflow-row" id="live-streaming">
+        <div><h3>Compress frames as they arrive</h3><p>The live sender uses separate compression and transport workers with bounded queues and backpressure. The receiver incrementally decodes framed packets and keeps timestamps and supported attributes.</p><p>Raw, zlib, zstd, quantized, and Draco profiles have different geometry support. Live transport does not make an offline neural training process into an online encoder.</p><a class="source-link" href="benchmarks.html#live-results">See measured throughput</a></div>
+        <div><div class="code-block"><div class="code-head"><span>Receiver on the display host</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>python -m scripts.validate_live receive \
+  --host 0.0.0.0 --port 47004 --frames 300 \
+  --viewer --report receiver.json</code></pre></div><div class="code-block"><div class="code-head"><span>Sender with an existing mesh folder</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>python -m scripts.validate_live send \
+  --host DISPLAY_HOST --port 47004 \
+  --source my_frames/ --kind points --profile zlib \
+  --frames 300 --report sender.json</code></pre></div><p>The validator converts the mesh to geometry-only points here. For Gaussian <code>frame_*.npz</code> arrays, use <code>--kind gaussians</code>. Unsupported textures are rejected.</p></div>
+      </div>
+      <div class="workflow-row" id="native-backends">
+        <div><h3>Install an actual runtime</h3><p>Adapters register codecs. Runtimes supply the implementations. The backend manager inspects prerequisites, fetches pinned sources, builds tools in a separate store, and verifies outputs with a native round trip.</p><p>Draco builds were verified on macOS and Linux. V-DMC and Faster V-DMC were built and tested on Linux x86_64 with GCC 13. The other nine recipes attach separately installed research environments.</p></div>
+        <div><div class="code-block"><div class="code-head"><span>Plan, build, and verify Draco</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>open4d backend list
+open4d backend plan draco
+open4d backend install draco --jobs 4
+open4d backend doctor draco</code></pre></div><p>Use <code>open4d backend plan vdmc</code> or <code>open4d backend plan faster_vdmc</code> for the Linux build requirements and license details. Installation of those research runtimes requires accepting their listed terms. No runtime redistribution permission is granted by an adapter.</p><a class="source-link" href="https://github.com/open4dfoundation/Open4D/tree/pr/october-proposal-plugins/open4d/backends/recipes" target="_blank" rel="noopener">Read the pinned build recipes</a></div>
+      </div>
+      <h3 id="codec-attributes">What happens to attributes?</h3>
+      <p>Texture pixels, material indices, and explicit vertex, face, or corner domains belong to the mesh. Each codec declares the fields it can carry; preserving NumPy arrays does not prove native research-codec support.</p>
+      <div class="table-wrap" tabindex="0" aria-label="Scrollable native attribute support"><table><caption>Verified development profiles</caption><thead><tr><th>Profile</th><th>Supported path</th><th>Boundary</th></tr></thead><tbody>
+      <tr><th scope="row">NumPy storage</th><td>Exact arrays, attribute domains, owned textures</td><td>Reference storage</td></tr>
+      <tr><th scope="row">Draco</th><td>Native generic attributes and UVs, with UV-seam splitting</td><td>Image pixels use auxiliary storage</td></tr>
+      <tr><th scope="row">V-DMC / Faster V-DMC</th><td>Native UV and texture coding, verified after a clean build</td><td>Opt-in texture profile, one RGB material, lossy remeshing and reparameterization</td></tr>
+      <tr><th scope="row">Other research codecs</th><td>Geometry or codec-specific appearance</td><td>No general UV or texture guarantee</td></tr>
+      </tbody></table></div>
+      <h3 id="data-catalog">Find data and model pairs</h3>
+      <div class="code-block"><div class="code-head"><span>Inspect acquisition and license details</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>open4d data list
+open4d data info open4d-synthetic-mesh
+open4d data info open4d-synthetic-gaussian</code></pre></div>
+      <p>The versioned catalog separates data, checkpoint, and code licenses. It includes upstream and manually acquired assets; an entry is not a redistribution grant. Synthetic archives are also staged with this website, each with its MIT license and provenance: <a href="assets/samples/open4d-synthetic-mesh-1.0.0.tar" download>eight OBJ mesh frames</a> and <a href="assets/samples/open4d-synthetic-gaussian-1.0.0.tar" download>eight degree-1 Gaussian PLY frames</a>. The catalog remains pending-upload until this website revision is publicly deployed. Additional captured dataset/checkpoint pairs still need approval.</p>
+      <p>Camera capture, synchronization policies, calibration loading, and recorded-data reconstruction have software tests. Physical-camera accuracy still needs validation with a real rig.</p>
 
       <h2 id="structure">Repository Structure</h2>
       <div class="code-block">
@@ -184,7 +247,7 @@ python examples/play_mesh_o4d.py</code></pre>
         about temporal structure directly.
       </p>
       <p>Supported content types in the current core:</p>
-      <div class="table-wrap">
+      <div class="table-wrap" tabindex="0" aria-label="Scrollable data table">
         <table>
           <thead>
             <tr><th>Content</th><th>Reader / Writer</th><th>Player</th><th>Creation tool</th></tr>
@@ -292,8 +355,10 @@ seq = io.<span class="fn">o4d_mesh_io</span>.read(<span class="str">"longdress.o
         New modules, benchmarks, datasets, metrics, and documentation are all welcome — see
         <a href="about.html#contributing">Contributing</a>.
       </p>
-    </main>
+    </div>
   </div>
+
+  </main>
 
   <footer class="footer">
     <div class="container">

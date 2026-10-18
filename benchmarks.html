@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Benchmarks — Open4D</title>
   <meta name="description" content="Reproducible benchmarks for 4D geometry: metrics, baselines, datasets, and evaluation methodology in the Open4D platform." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#f3f3ee" />
+  <link rel="canonical" href="https://open4dfoundation.github.io/benchmarks.html" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <header class="nav">
     <div class="nav-inner">
@@ -29,13 +29,13 @@
         </svg>
         <span>Open<span class="logo-4d">4D</span></span>
       </a>
-      <nav>
+      <nav aria-label="Primary navigation">
         <ul class="nav-links" id="nav-links">
           <li><a href="index.html">Home</a></li>
           <li><a href="modules.html">Modules</a></li>
           <li><a href="documentation.html">Documentation</a></li>
           <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="benchmarks.html" class="active">Benchmarks</a></li>
+          <li><a href="benchmarks.html" class="active" aria-current="page">Benchmarks</a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
@@ -43,28 +43,48 @@
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </header>
+
+  <main id="main-content">
 
   <section class="page-hero">
     <div class="hero-bg"></div>
     <div class="container">
-      <span class="section-eyebrow">Benchmarks</span>
       <h1>Reproducible Evaluation</h1>
+        <span class="section-context">Benchmarks</span>
       <p>
-        The <code style="font-family: var(--mono); font-size: 0.9em; color: #a5b4fc;">benchmarks/</code> layer holds
+        The <code style="font-family: var(--mono); font-size: 0.9em; color: var(--accent);">benchmarks/</code> layer holds
         paper-reproducible experiment code: Open4D methods, reimplemented baselines, configs, metrics, and
         scripts — so results can be compared across papers instead of re-derived for each one.
       </p>
     </div>
   </section>
 
+
+  <section class="section section-alt" id="measured-results">
+    <div class="container">
+      <div class="section-head left"><h2>Inspect the measured tradeoffs</h2><p>Four full sequences. Actual bytes. Fresh-process decoding. Measurements from the development source preview on 18 October 2026.</p></div>
+      <p class="measurement-note">C3 basketball, C4 dancer, C5 Mitch, and C6 Thomas each contain 300 mesh frames over 10 seconds. These runs encode geometry only. Draco uses 8-, 11-, and 14-bit quantization; raw storage is the exact reference. No captured datasets are redistributed here.</p>
+      <div class="benchmark-controls"><label for="rd-sequence">Sequence<select id="rd-sequence" disabled><option value="C3">C3 · Basketball</option><option value="C4">C4 · Dancer</option><option value="C5">C5 · Mitch</option><option value="C6">C6 · Thomas</option></select></label><label for="rd-metric">Geometry metric<select id="rd-metric" disabled><option value="surfaceD1">Surface D1 PSNR</option><option value="surfaceD2">Surface D2 PSNR</option><option value="pointD1">Point-set D1 PSNR</option></select></label></div>
+      <p id="rd-error" class="measurement-error" hidden>The interactive data could not load. The table below retains the C3 measurements. <a href="assets/validation/mesh-rd-2026-10-18.json" download>Download the complete JSON</a> to inspect all four sequences.</p>
+      <figure class="rd-figure" id="rd-figure" tabindex="0" aria-label="Scrollable rate–distortion chart; values are also in the table" hidden><svg class="rd-chart" viewBox="0 0 820 330" role="img" aria-labelledby="rd-title rd-description"><title id="rd-title">Draco rate–distortion measurements</title><desc id="rd-description">The same measurements appear in the table below.</desc><g id="rd-plot"></g></svg><figcaption id="rd-caption">Measured artifact bitrate versus geometry PSNR. Higher PSNR indicates lower error. Raw is exact and excluded from the finite PSNR curve.</figcaption></figure>
+      <div class="table-wrap" tabindex="0" aria-label="Scrollable measured compression results"><table class="measurement-table"><caption id="rd-table-caption">C3 Basketball · 300 frames · Surface D1 PSNR</caption><thead><tr><th>Profile</th><th>Artifact MB</th><th>PSNR dB</th><th>Encode s</th><th>Decode s</th></tr></thead><tbody id="rd-table"><tr><th scope="row">raw</th><td>217.66</td><td>Exact</td><td>1.214</td><td>0.499</td></tr><tr><th scope="row">draco-8</th><td>77.09</td><td>66.96</td><td>2.035</td><td>0.488</td></tr><tr><th scope="row">draco-11</th><td>83.92</td><td>85.00</td><td>2.199</td><td>0.539</td></tr><tr><th scope="row">draco-14</th><td>87.65</td><td>102.99</td><td>2.206</td><td>0.562</td></tr></tbody></table></div>
+      <p id="rd-memory" class="measurement-note"></p>
+      <p class="measurement-note">MB means 1,000,000 bytes. Encode and decode columns measure codec work; process startup, opening, and validation export are recorded separately in the JSON. Memory is process-tree RSS sampled every 20 ms, rather than the decoded array size.</p>
+      <details class="measurement-method"><summary>Metric definitions and reproduction</summary><p>Surface D1/D2 use 2,048 area samples in each direction, with exact distances to triangles. Zero-area faces are excluded. The worse directional mean squared error is normalized by the full reference sequence bounding-box diagonal. PSNR uses the mean MSE across frames. Point-set D1 uses independent samples and includes sampling error; it is a separate measurement, not a substitute for the surface result.</p><p>The CPU Draco runs used Linux x86_64, Python 3.10.16, NumPy 2.2.5, and DracoPy. The server has two RTX 4090 GPUs. These are development validation results, not a standard common-test-conditions claim or a comparison against published learned methods.</p><div class="code-block"><div class="code-head"><span>Development rate–distortion harness</span><button class="copy-btn" type="button">Copy</button></div><pre tabindex="0"><code>python -m scripts.codec_rd --help
+python -m scripts.codec_rd.evaluate --help</code></pre></div><a class="source-link" href="https://github.com/open4dfoundation/Open4D/tree/pr/october-proposal-plugins/scripts/codec_rd" target="_blank" rel="noopener">Read the encoder, cold decoder, and metric implementation</a></details>
+      <a class="source-link" href="assets/validation/mesh-rd-2026-10-18.json" download>Download all 16 measured result summaries and artifact hashes</a>
+    </div>
+  </section>
+  <section class="section" id="learned-results"><div class="container"><div class="section-head left"><h2>Inspect the learned runs separately</h2><p>N4MC at 1,000 epochs and QNDF at 3,500 epochs. Each model was encoded once, then decoded in a fresh process.</p></div><p class="measurement-note">These experiments use 12 sampled frames, at stride 25 across each 300-frame clip. They are sparse-frame geometry experiments, not the full 300-frame baseline above and not an online training claim. Artifact size and distortion must be interpreted within this sampling protocol.</p><div class="table-wrap" tabindex="0" aria-label="Scrollable learned compression results"><table class="measurement-table"><caption>12 sampled mesh frames per run · surface D1 PSNR</caption><thead><tr><th>Sequence / codec</th><th>Epochs</th><th>Artifact MB</th><th>PSNR dB</th><th>Encode s</th><th>Decode s</th></tr></thead><tbody id="learned-table"><tr><th scope="row">C3 / N4MC</th><td>1,000</td><td>7.21</td><td>45.10</td><td>173.4</td><td>1.194</td></tr><tr><th scope="row">C3 / QNDF</th><td>3,500</td><td>4.22</td><td>55.87</td><td>623.9</td><td>7.534</td></tr><tr><th scope="row">C5 / N4MC</th><td>1,000</td><td>7.21</td><td>48.17</td><td>183.6</td><td>1.163</td></tr><tr><th scope="row">C5 / QNDF</th><td>3,500</td><td>4.25</td><td>54.66</td><td>604.3</td><td>8.309</td></tr></tbody></table></div><details class="measurement-method"><summary>Intermediate checkpoint measurements</summary><div class="table-wrap" tabindex="0" aria-label="Scrollable training checkpoint results"><table class="measurement-table"><caption>Each saved checkpoint was cold-decoded independently</caption><thead><tr><th>Sequence / codec</th><th>Epoch</th><th>Artifact MB</th><th>Surface D1 dB</th></tr></thead><tbody id="checkpoint-table"><tr><th scope="row">C3 / N4MC</th><td>100</td><td>7.16</td><td>37.15</td></tr><tr><th scope="row">C3 / N4MC</th><td>300</td><td>7.19</td><td>39.16</td></tr><tr><th scope="row">C3 / QNDF</th><td>300</td><td>4.22</td><td>55.82</td></tr><tr><th scope="row">C3 / QNDF</th><td>1,000</td><td>4.22</td><td>55.85</td></tr><tr><th scope="row">C5 / N4MC</th><td>100</td><td>7.17</td><td>35.05</td></tr><tr><th scope="row">C5 / N4MC</th><td>300</td><td>7.18</td><td>39.68</td></tr><tr><th scope="row">C5 / QNDF</th><td>300</td><td>4.25</td><td>54.64</td></tr><tr><th scope="row">C5 / QNDF</th><td>1,000</td><td>4.25</td><td>54.65</td></tr></tbody></table></div><p>The downloadable JSON also records preprocessing and reconstruction-stage quality, sampled process-tree RSS, Torch peak allocated and reserved memory, and artifact hashes. Checkpoint sizes count actual saved bytes rather than estimated training rates.</p></details><a class="source-link" href="assets/validation/learned-rd-2026-10-18.json" download>Download learned runs and checkpoint summaries</a></div></section>
+  <section class="section" id="live-results"><div class="container"><div class="section-head left"><h2>Live compression over a real connection</h2><p>Linux sender to the Mac Qt viewer over the shared SSH connection. Frames were compressed as they arrived, received, decoded, and displayed.</p></div><div class="table-wrap" tabindex="0" aria-label="Scrollable live transport results"><table><caption>Backpressure enabled; zero skipped or replaced frames in these runs</caption><thead><tr><th>Input / profile</th><th>Displayed</th><th>Wire MB</th><th>Receiver fps</th><th>Validation</th></tr></thead><tbody><tr><th scope="row">Gaussian / zlib</th><td>30 / 30</td><td>28.31</td><td>5.30</td><td>Exact array hashes</td></tr><tr><th scope="row">Gaussian / quantized</th><td>30 / 30</td><td>18.40</td><td>10.15</td><td>Lossy; exact hashes do not apply</td></tr><tr><th scope="row">Points / zlib</th><td>300 / 300</td><td>41.46</td><td>6.29</td><td>Exact array hashes</td></tr></tbody></table></div><p class="measurement-note">These are end-to-end receiver rates for this connection and input-loading path, not a 30 fps guarantee. The Gaussian inputs are previously learned splat arrays; this run does not train a neural model online. The point input is geometry extracted from the mesh sequence.</p><a class="source-link" href="documentation.html#live-streaming">Run the live validation workflow</a></div></section>
   <section class="section">
     <div class="container">
       <div class="section-head left">
-        <span class="section-eyebrow">Methodology</span>
         <h2>What Open4D measures</h2>
+        <span class="section-context">Methodology</span>
         <p>Evaluation in Open4D is systems-aware: a codec is only as good as the pipeline it enables.</p>
       </div>
       <div class="grid grid-2">
@@ -95,17 +115,17 @@
   <section class="section section-alt">
     <div class="container">
       <div class="section-head left">
-        <span class="section-eyebrow">Structure</span>
         <h2>Anatomy of a benchmark</h2>
+        <span class="section-context">Structure</span>
         <p>Every benchmark is explicit and scriptable — method code, baselines, configs, and metrics in one place.</p>
       </div>
       <div class="split">
         <div class="reveal">
           <ul class="checklist">
             <li><span class="check"><svg viewBox="0 0 16 16"><path d="M2 8.5 6 12.5 14 3.5"/></svg></span><span><strong>Open4D methods</strong> — the module under evaluation, pinned to a version</span></li>
-            <li><span class="check"><svg viewBox="0 0 16 16"><path d="M2 8.5 6 12.5 14 3.5"/></svg></span><span><strong>Reimplemented baselines</strong> — prior methods in <code style="font-family: var(--mono); font-size: 0.85em; color: #a5b4fc;">benchmarks/baselines</code>, run under the same harness</span></li>
+            <li><span class="check"><svg viewBox="0 0 16 16"><path d="M2 8.5 6 12.5 14 3.5"/></svg></span><span><strong>Reimplemented baselines</strong> — prior methods in <code style="font-family: var(--mono); font-size: 0.85em; color: var(--accent);">benchmarks/baselines</code>, run under the same harness</span></li>
             <li><span class="check"><svg viewBox="0 0 16 16"><path d="M2 8.5 6 12.5 14 3.5"/></svg></span><span><strong>Configs</strong> — every operating point recorded, no hidden knobs</span></li>
-            <li><span class="check"><svg viewBox="0 0 16 16"><path d="M2 8.5 6 12.5 14 3.5"/></svg></span><span><strong>Shared metrics</strong> — computed by <code style="font-family: var(--mono); font-size: 0.85em; color: #a5b4fc;">open4d.metrics</code>, identical for methods and baselines</span></li>
+            <li><span class="check"><svg viewBox="0 0 16 16"><path d="M2 8.5 6 12.5 14 3.5"/></svg></span><span><strong>Shared metrics</strong> — computed by <code style="font-family: var(--mono); font-size: 0.85em; color: var(--accent);">open4d.metrics</code>, identical for methods and baselines</span></li>
             <li><span class="check"><svg viewBox="0 0 16 16"><path d="M2 8.5 6 12.5 14 3.5"/></svg></span><span><strong>Docker environments</strong> — experiments run the same way on any machine</span></li>
           </ul>
         </div>
@@ -131,11 +151,11 @@ docker build -t open4d docker/</code></pre>
   <section class="section">
     <div class="container">
       <div class="section-head left">
-        <span class="section-eyebrow">Datasets</span>
         <h2>Common 4D test content</h2>
+        <span class="section-context">Datasets</span>
         <p>Benchmarks are typically run on standard dynamic-geometry datasets used across the field.</p>
       </div>
-      <div class="table-wrap reveal">
+      <div class="table-wrap reveal" tabindex="0" aria-label="Scrollable data table">
         <table>
           <thead>
             <tr><th>Dataset</th><th>Content</th><th>Typical use</th></tr>
@@ -151,7 +171,7 @@ docker build -t open4d docker/</code></pre>
       <div class="callout" style="margin-top: 28px;">
         <span class="callout-icon">📊</span>
         <p>
-          Published benchmark numbers will appear here as modules and papers are released. Until then, the
+          Development measurements now appear above. Published paper comparisons will be added as modules and papers are released. The
           <a href="https://github.com/open4dfoundation/Open4D/tree/main/benchmarks" target="_blank" rel="noopener">benchmarks directory</a>
           is the source of truth for what is currently runnable.
         </p>
@@ -166,6 +186,8 @@ docker build -t open4d docker/</code></pre>
       <a href="https://github.com/open4dfoundation/Open4D" target="_blank" rel="noopener" class="btn btn-primary">Contribute a Benchmark</a>
     </div>
   </section>
+
+  </main>
 
   <footer class="footer">
     <div class="container">
@@ -210,5 +232,6 @@ docker build -t open4d docker/</code></pre>
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/benchmarks.js" defer></script>
 </body>
 </html>

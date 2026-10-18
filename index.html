@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Open4D — An Open Platform for 4D Geometry Data</title>
   <meta name="description" content="Open4D is an open, research-driven platform for the representation, compression, processing, evaluation, and streaming of time-varying 4D geometry data." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <meta name="theme-color" content="#f3f3ee" />
+  <link rel="canonical" href="https://open4dfoundation.github.io/" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
   <!-- ============ NAV ============ -->
   <header class="nav">
@@ -30,9 +30,9 @@
         </svg>
         <span>Open<span class="logo-4d">4D</span></span>
       </a>
-      <nav>
+      <nav aria-label="Primary navigation">
         <ul class="nav-links" id="nav-links">
-          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="index.html" class="active" aria-current="page">Home</a></li>
           <li><a href="modules.html">Modules</a></li>
           <li><a href="documentation.html">Documentation</a></li>
           <li><a href="gallery.html">Gallery</a></li>
@@ -44,15 +44,19 @@
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-links"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </header>
+
+  <main id="main-content">
 
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="container">
+      <div class="hero-layout">
+      <div>
       <h1>The open platform for<br /><span class="gradient-text">Dynamic 4D geometry data</span></h1>
       <p class="hero-sub">
         Open4D is an open, research-driven platform for the <strong>representation, compression, processing,
@@ -66,17 +70,29 @@
           View on GitHub
         </a>
       </div>
+      <p class="release-note">Source checkout available. The Python package remains unpublished while the release ledger is blocked. New codec workflows are labelled as development previews.</p>
+      </div>
+      <figure class="viewer-proof">
+        <video controls playsinline preload="metadata" poster="assets/media/wave-poster.png" width="640" height="520" aria-label="Open4D viewer rendering a generated mesh wave">
+          <source src="assets/media/open4d-wave.mp4" type="video/mp4" />
+          Your browser cannot play this video. <a href="assets/media/open4d-wave.mp4">Download the generated wave recording</a>.
+        </video>
+        <dl class="proof-ledger"><div><dt>Input</dt><dd>30 mesh frames</dd></div><div><dt>Playback</dt><dd>15 fps</dd></div><div><dt>Source</dt><dd>MIT generator</dd></div></dl>
+        <figcaption>Actual Qt rendering of a procedural wave. Native browser controls play the recording. No captured dataset or learned model is used. <a href="documentation.html#sequence-api">Run the example</a>.</figcaption>
+      </figure>
+      </div>
       <div class="hero-terminal">
         <div class="term-bar">
           <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
           <span class="term-title">terminal</span>
         </div>
-        <pre><span class="comment"># Install Open4D (development)</span>
+        <pre tabindex="0" aria-label="Source setup commands"><span class="comment"># Install Open4D (development)</span>
 <span class="prompt">$</span> git clone https://github.com/open4dfoundation/Open4D.git
 <span class="prompt">$</span> cd Open4D
-<span class="prompt">$</span> pip install -e .
+<span class="prompt">$</span> python -m pip install -e ".[player]"
 <span class="comment"># Play a time-varying mesh sequence</span>
-<span class="prompt">$</span> python examples/play_mesh_o4d.py</pre>
+<span class="prompt">$</span> open4d demo my-wave
+<span class="prompt">$</span> open4d view my-wave</pre>
       </div>
     </div>
   </section>
@@ -93,25 +109,27 @@
   <section class="section">
     <div class="container">
       <div class="section-head left">
-        <span class="section-eyebrow">News</span>
-        <h2>Latest updates</h2>
+        <h2>Development and project notes</h2>
+        <p>Fresh validation is listed first. Earlier entries retain the original site's planning dates.</p>
+        <span class="section-context">News</span>
       </div>
       <div class="news-list reveal">
+        <div class="news-item"><span class="news-date">Oct 2026</span><div><h3>Gaussian playback, live transport, and measured compression</h3><p>The development preview adds splat rendering, bounded TCP compression, pinned native builds, and cold-decoded rate–distortion measurements. <a href="documentation.html#development-workflows">Explore the workflows</a> or <a href="benchmarks.html#measured-results">inspect the results</a>.</p></div></div>
         <div class="news-item">
           <span class="news-date">Jul 2026</span>
-          <div><h4>Open4D website launched</h4><p>A new home for docs, modules, benchmarks, and the project roadmap.</p></div>
+          <div><h3>Open4D website launched</h3><p>A new home for docs, modules, benchmarks, and the project roadmap.</p></div>
         </div>
         <div class="news-item">
           <span class="news-date">Jun 2026</span>
-          <div><h4>N4MC and TSMC integrated as core compression modules</h4><p>Neural time-varying mesh compression and 4D scene mesh compression now ship as submodules.</p></div>
+          <div><h3>N4MC and TSMC integrated as core compression modules</h3><p>Neural time-varying mesh compression and 4D scene mesh compression now ship as submodules.</p></div>
         </div>
         <div class="news-item">
           <span class="news-date">May 2026</span>
-          <div><h4>Unity decoder plugin runs on Meta Quest 3</h4><p>Real-time 4D mesh decoding on standalone XR headsets via the Unity plugin.</p></div>
+          <div><h3>Unity decoder plugin runs on Meta Quest 3</h3><p>Real-time 4D mesh decoding on standalone XR headsets via the Unity plugin.</p></div>
         </div>
         <div class="news-item">
           <span class="news-date">Apr 2026</span>
-          <div><h4>Open4D core API released on GitHub</h4><p>Canonical 4D data models, IO readers/writers, and quality metrics — installable with pip.</p></div>
+          <div><h3>Open4D core API released on GitHub</h3><p>Canonical 4D data models, IO readers/writers, and quality metrics — installable with pip.</p></div>
         </div>
       </div>
     </div>
@@ -121,10 +139,10 @@
   <section class="section section-alt">
     <div class="container split">
       <div class="reveal">
-        <span class="section-eyebrow">Why Open4D?</span>
         <h2 style="font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 18px;">
           Let research compound,<br />not reset with every paper
         </h2>
+        <span class="section-context">Why Open4D?</span>
         <p style="color: var(--text-muted); margin-bottom: 28px;">
           Today, 4D geometry pipelines are fragmented — algorithms live in paper-specific codebases,
           evaluation scripts are ad hoc, datasets and metrics are inconsistent, and systems integration
@@ -149,15 +167,15 @@
   <section class="section">
     <div class="container">
       <div class="section-head">
-        <span class="section-eyebrow">Core Features</span>
         <h2>Everything 4D, in one stack</h2>
+        <span class="section-context">Core Features</span>
         <p>From canonical data structures to on-headset playback, Open4D covers the full lifecycle of time-varying geometry.</p>
       </div>
       <div class="grid grid-3">
         <div class="card reveal">
           <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5z"/><path d="M3 7l9 5 9-5"/><path d="M12 12v10"/></svg></div>
           <h3>4D Data Structures</h3>
-          <p>Canonical representations for time-varying meshes and point clouds — the <code style="font-family: var(--mono); font-size: 0.85em; color: #a5b4fc;">.o4d</code> data model treats time as a first-class dimension.</p>
+          <p>Canonical representations for time-varying meshes and point clouds — the <code style="font-family: var(--mono); font-size: 0.85em; color: var(--accent);">.o4d</code> data model treats time as a first-class dimension.</p>
         </div>
         <div class="card reveal">
           <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 17v3h16v-3"/><path d="M12 3v13"/><path d="M7 11l5 5 5-5"/></svg></div>
@@ -192,8 +210,8 @@
   <section class="section section-alt">
     <div class="container">
       <div class="section-head">
-        <span class="section-eyebrow">Research Modules</span>
         <h2>Built by researchers, for researchers</h2>
+        <span class="section-context">Research Modules</span>
         <p>Independent modules on top of the stable core API. Each ships with code, configs, and evaluation scripts.</p>
       </div>
       <div class="grid grid-3">
@@ -241,10 +259,10 @@
   <section class="section">
     <div class="container split">
       <div class="reveal">
-        <span class="section-eyebrow">Quickstart</span>
         <h2 style="font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 18px;">
           From clone to playback<br />in three commands
         </h2>
+        <span class="section-context">Quickstart</span>
         <p style="color: var(--text-muted); margin-bottom: 20px;">
           Open4D installs as a standard Python package. Bundled examples let you load, convert, and play
           time-varying meshes and point clouds immediately — including Draco-compressed point-cloud streams.
@@ -273,8 +291,8 @@ python examples/play_draco_pointcloud_o4d.py</code></pre>
   <section class="section section-alt">
     <div class="container">
       <div class="section-head">
-        <span class="section-eyebrow">Citation</span>
         <h2>Using Open4D in your research?</h2>
+        <span class="section-context">Citation</span>
         <p>If Open4D is useful in your work, please cite the project.</p>
       </div>
       <div style="max-width: 720px; margin: 0 auto;" class="reveal">
@@ -302,6 +320,8 @@ python examples/play_draco_pointcloud_o4d.py</code></pre>
   </section>
 
   <!-- ============ FOOTER ============ -->
+  </main>
+
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
